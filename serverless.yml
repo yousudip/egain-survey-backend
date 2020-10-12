@@ -1,0 +1,47 @@
+# Welcome to eGain Survey application!
+service: egainsls
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  #create role on the time of deployment with specific policy
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-south-1:773190917110:table/survey_table"
+
+
+functions:
+  getSurveys:
+    handler: handler.getSurveys
+    events:
+      - http:
+          path: getSurveys
+          method: get
+          integration: lambda
+          #limit access to hosted UI only
+          cors:
+            origin: 'http://d2aeo7qs41sj2n.cloudfront.net/'
+          #create authorizer to enable authorization with cognito user pool's id_token
+          authorizer:
+            name: authorizer
+            arn: arn:aws:cognito-idp:ap-south-1:773190917110:userpool/ap-south-1_l5omrDIEp
+  postSurveys:
+    handler: handler.postSurveys
+    events:
+      - http:
+          path: postSurveys
+          method: post
+          integration: lambda
+          #limit access to hosted UI only
+          cors:
+            origin: 'http://d2aeo7qs41sj2n.cloudfront.net/'
+          #create authorizer to enable authorization with cognito user pool's id_token
+          authorizer:
+            name: authorizer
+            arn: arn:aws:cognito-idp:ap-south-1:773190917110:userpool/ap-south-1_l5omrDIEp

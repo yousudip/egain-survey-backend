@@ -1,0 +1,18 @@
+{
+  "name": "egainsls",
+  "version": "1.0.0",
+  "description": "This is backend serverless functions (GET/POST) for egain servey administration application.",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sudip Bhakta",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-offline": "^6.1.4"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.771.0",
+    "crypto": "^1.0.1"
+  }
+}
